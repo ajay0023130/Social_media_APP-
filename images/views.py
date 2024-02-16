@@ -23,7 +23,7 @@ def image_create(request):
             # redirect to new created item detail view
             return redirect(new_image.get_absolute_url())
     else:
-# build form with data provided by the bookmarklet via GET
+        # build form with data provided by the bookmarklet via GET
         form = ImageCreateForm(data=request.GET)
     return render(request,'images/create.html',{'section': 'images','form': form})
 
@@ -31,5 +31,7 @@ def image_create(request):
 
 def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
+
     return render(request,'images/detail.html',{'section': 'images',
+
     'image': image})
