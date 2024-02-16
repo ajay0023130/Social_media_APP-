@@ -1,0 +1,12 @@
+*.pyc
+
+*.crt
+*.key
+
+.env
+
+important.txt
+
+venv
+
+media
