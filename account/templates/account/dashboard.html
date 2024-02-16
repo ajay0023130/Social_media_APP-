@@ -17,16 +17,4 @@ from other websites → <a href="javascript:{% include 'bookmarklet_launcher.js'
 href="{% url 'password_change' %}">change your password</a>.</p>
 
 
-
-
-
-
-
-
-{% if user.profile.photo %}
-<img src="{{ user.profile.photo.url }}" alt="Profile Picture">
-{% else %}
-<!-- Placeholder image or default profile picture -->
-
-{% endif %}
 {% endblock %}
