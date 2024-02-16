@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import ImageCreateForm
 
-# @login_required
+@login_required
 def image_create(request):
     if request.method == 'POST':
         form = ImageCreateForm(data=request.POST)
@@ -35,3 +35,28 @@ def image_detail(request, id, slug):
     return render(request,'images/detail.html',{'section': 'images',
 
     'image': image})
+
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
+@login_required
+@require_POST
+def image_like(request):
+    image_id = request.POST.get('id')
+    action = request.POST.get('action')
+    print("image_id",image_id)
+    print("action",action)
+    if image_id and action:
+        try:
+            image = Image.objects.get(id=image_id)
+            if action == 'like':
+                image.users_like.add(request.user)
+                response = {'status': 'ok'}
+            else:
+                
+                image.users_like.remove(request.user)
+                response = {'status': 'ok'}
+        except Image.DoesNotExist:
+            response = {'message': 'id and action missisng'}
+    return JsonResponse(response)

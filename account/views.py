@@ -36,9 +36,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboard(request):
-    
-    total_images_created=request.user.images_created.count()
-    print("total_images_created",total_images_created)
     return render(request,
     'account/dashboard.html',{'section': 'dashboard'})
 
