@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from dotenv import load_dotenv
+from django.urls import reverse_lazy
 
 # Load environment variables from .env file
 load_dotenv()
@@ -211,3 +212,7 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
+
+# ...
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',args=[u.username]) }
