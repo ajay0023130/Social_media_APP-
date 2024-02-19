@@ -13,6 +13,7 @@ from .forms import ImageCreateForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, \
 PageNotAnInteger
+from actions.utils import create_action
 
 @login_required
 def image_create(request):
@@ -24,6 +25,7 @@ def image_create(request):
             # assign current user to the item
             new_image.user = request.user
             new_image.save()
+            create_action(request.user, 'bookmarked image', new_image)
             messages.success(request,'Image added successfully')
             # redirect to new created item detail view
             return redirect(new_image.get_absolute_url())
@@ -55,10 +57,12 @@ def image_like(request):
             image = Image.objects.get(id=image_id)
             if action == 'like':
                 image.users_like.add(request.user)
+                create_action(request.user, 'likes', image)
                 response = {'status': 'ok'}
             else:
                 
                 image.users_like.remove(request.user)
+                create_action(request.user, 'Unlikes', image)
                 response = {'status': 'ok'}
         except Image.DoesNotExist:
             response = {'message': 'id and action missisng'}
@@ -88,3 +92,5 @@ def image_list(request):
 
     return render(request,'images/list.html',{'section': 'images',
     'images': images})
+
+
