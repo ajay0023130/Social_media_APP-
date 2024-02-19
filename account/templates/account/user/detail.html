@@ -9,6 +9,7 @@
     <img src="{% thumbnail user.profile.photo 180x180 %}" class="user-detail">
   </div>
   {% with total_followers=user.followers.count %}
+  
     <span class="count">
       <span class="total">{{ total_followers }}</span>
       follower{{ total_followers|pluralize }}
@@ -23,6 +24,24 @@
     <div id="image-list" class="image-container">
       {% include "images/list_images.html" with images=user.images_created.all %}
     </div>
+
+    <div class="image-likes">
+        <h3>All Follower list</h3>
+        {% with total_follower=user.followers.all %}
+        {% for user in total_follower %}
+        
+          <div>
+            {% if user.profile.photo %}
+              <img src="{{ user.profile.photo.url }}">
+            {% endif %}
+            <p>{{ user.first_name }}</p>
+          </div>
+        
+        {% empty %}
+          Nobody likes this image yet.
+        {% endfor %}
+         {% endwith %}
+      </div>
   {% endwith %}
 {% endblock %}
 
