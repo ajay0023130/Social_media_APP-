@@ -53,12 +53,16 @@ INSTALLED_APPS = [
     'social_django',
     'django_extensions',
     'easy_thumbnails',
+    'debug_toolbar',
 
     
     
 ]
 
 MIDDLEWARE = [
+     # DebugToolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -199,7 +203,6 @@ SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY') # Twitter API Key
 SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET') # Twitter API Secret
 
 SOCIAL_AUTH_PIPELINE = [
-    
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.auth_allowed',
@@ -217,3 +220,14 @@ SOCIAL_AUTH_PIPELINE = [
 # ...
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail',args=[u.username]) }
+
+
+ # for add debug tool
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+# setup redis
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
