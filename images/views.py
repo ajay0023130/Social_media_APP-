@@ -83,8 +83,9 @@ def image_like(request):
 @login_required
 def image_list(request):
     images = Image.objects.all()
-    l = len(images) 
-    paginator = Paginator(images,9)
+    l = len(images)
+    print("l",l) 
+    paginator = Paginator(images,7)
     page = request.GET.get('page')
     print("page",page)
     images_only = request.GET.get('images_only')
